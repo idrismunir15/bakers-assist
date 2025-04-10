@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Change this to a secure random key in production
+app.secret_key = 'alooma_bakerassist_2025'  # Change this to a secure random key in production
 
 # Database setup
 DB_NAME = 'baker_inventory.db'
