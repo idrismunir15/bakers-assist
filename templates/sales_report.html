@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ period }} Sales Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <h1 class="text-center mb-4">{{ period }} Sales Report</h1>
+        <form method="POST" class="text-center mb-4">
+            <label for="year" class="form-label">Select Year:</label>
+            <select name="year" id="year" class="form-select d-inline w-auto" onchange="this.form.submit()">
+                {% for year in years %}
+                <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <pre class="card p-3 bg-white">
+{% for line in report %}
+{{ line }}
+{% endfor %}
+        </pre>
+        <div class="text-center mt-4">
+            <form method="POST" class="d-inline">
+                <input type="hidden" name="year" value="{{ selected_year }}">
+                <button type="submit" name="download" class="btn btn-primary">Download Report</button>
+            </form>
+            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
