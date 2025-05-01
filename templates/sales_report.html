@@ -2,33 +2,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ period }} Sales Report</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #ff6f61;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #ffebeb !important;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #ff4b3a;
+            color: white;
+        }
+        .select-custom {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+        }
+        .select-custom:focus {
+            border-color: #ff6f61;
+            box-shadow: 0 0 5px rgba(255, 111, 97, 0.3);
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">Baker's Inventory Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container my-5">
-        <h1 class="text-center mb-4">{{ period }} Sales Report</h1>
-        <form method="POST" class="text-center mb-4">
-            <label for="year" class="form-label">Select Year:</label>
-            <select name="year" id="year" class="form-select d-inline w-auto" onchange="this.form.submit()">
-                {% for year in years %}
-                <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
-                {% endfor %}
-            </select>
-        </form>
-        <pre class="card p-3 bg-white">
-{% for line in report %}
-{{ line }}
-{% endfor %}
-        </pre>
-        <div class="text-center mt-4">
-            <form method="POST" class="d-inline">
-                <input type="hidden" name="year" value="{{ selected_year }}">
-                <button type="submit" name="download" class="btn btn-primary">Download Report</button>
+        <h1 class="text-center mb-4 text-dark"><i class="fas fa-chart-line me-2"></i>{{ period }} Sales Report</h1>
+        
+        <div class="card p-4 mb-4">
+            <form method="POST" class="d-flex justify-content-center gap-3 flex-wrap">
+                <div>
+                    <label for="year" class="form-label">Year:</label>
+                    <select name="year" id="year" class="select-custom" onchange="this.form.submit()">
+                        {% for year in years %}
+                        <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" name="download" value="download" class="btn btn-custom"><i class="fas fa-download me-1"></i>Download Report</button>
+                </div>
             </form>
-            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
+
+        <div class="card p-4">
+            {% for line in report %}
+            <p class="mb-1">{{ line }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-custom"><i class="fas fa-arrow-left me-1"></i>Back to Home</a>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
